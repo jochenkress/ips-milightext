@@ -1,0 +1,11 @@
+{
+    "id": "{F16D6B0D-66A7-4E9E-AEBA-1275422DB0B6}",
+    "name": "milight",
+    "type": 3,
+    "vendor": "milight",
+    "aliases": ["milight RGBW-Gateway"],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "MILIGHT"
+}
