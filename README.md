@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-﻿# milight
-IPS-Modul zur Steuerung des milight-RGBW-Gateways (auch bekannt als Limitless LED oder IWY-Light)
+﻿
 
 ## Inhalt
 
@@ -146,4 +144,3 @@ IPS-Modul zur Steuerung des milight-RGBW-Gateways
 ## 6. Changelog
 
    1.0. : erste Version für IPS 4.x
->>>>>>> 9785678c050e52a22d20f01f0785557d11f5f752
