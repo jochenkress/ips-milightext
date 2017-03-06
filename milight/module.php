@@ -227,7 +227,7 @@ class milight extends IPSModule
 
   public function SetDiscoMode(integer $Mode)
   {  
-    $steps = $Mode - $mDiscoMode;
+    $steps = $Mode - ($this->mDiscoMode);
     if ($steps == 0) return;
     if ($steps < 0) $steps += 9;
     
