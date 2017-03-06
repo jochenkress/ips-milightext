@@ -36,3 +36,6 @@ msgstr "Helligkeit"
 
 msgid "(brightness is set immediately after changing the slider)"
 msgstr "(Die Helligkeit wird sofort nach Änderung des Schiebereglers gesetzt)"
+
+msgid "Speed"
+msgstr "Geschwindigkeit"
