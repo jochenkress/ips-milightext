@@ -217,7 +217,7 @@ class milight extends IPSModule
     
     $tosend[] = $this->GroupOn;
  
-    switch ($speed) {
+    switch ($Mode) {
       case 0: $tosend[] = "\x4d\x00\x55"; break; # Disco Mode +
       case 1: $tosend[] = "\x43\x00\x55"; break; # Disco Speed -
       case 2: $tosend[] = "\x44\x00\x55"; break; # Disco Speed +
