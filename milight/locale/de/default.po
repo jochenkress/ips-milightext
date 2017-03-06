@@ -39,3 +39,6 @@ msgstr "(Die Helligkeit wird sofort nach Änderung des Schiebereglers gesetzt)"
 
 msgid "Speed"
 msgstr "Geschwindigkeit"
+
+msgid "Mode"
+msgstr "Modus"
