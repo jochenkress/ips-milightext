@@ -105,9 +105,9 @@ class milight extends IPSModule
 		));
 
 		$this->RegisterProfileIntegerEx("milight.Disco", "", "", "", Array(
-			Array(0, 'mode',     '', -1),
-			Array(1, '-',        '', -1),
-			Array(2, '+',        '', -1),
+			Array(1, 'mode',     '', -1),
+			Array(2, '-',        '', -1),
+			Array(3, '+',        '', -1),
 		));
 
 		$this->RegisterVariableInteger("STATE", "STATE", "milight.State", 1);
@@ -211,16 +211,16 @@ class milight extends IPSModule
 
   public function SetDiscoMode(integer $Mode)
   {  
-  
     $this->InitGroup($this->ReadPropertyInteger('ValueGroup'));
     $tosend = array();
-    
-    $tosend[] = $this->GroupOn;
- 
+
+    if(!$Mode) $tosend[] = $this->GroupOn;
+
     switch ($Mode) {
-      case 0: $tosend[] = "\x4d\x00\x55"; break; # Disco Mode +
-      case 1: $tosend[] = "\x43\x00\x55"; break; # Disco Speed -
-      case 2: $tosend[] = "\x44\x00\x55"; break; # Disco Speed +
+      case 0:
+      case 1: $tosend[] = "\x4d\x00\x55"; break; # Disco Mode +
+      case 2: $tosend[] = "\x43\x00\x55"; break; # Disco Speed -
+      case 3: $tosend[] = "\x44\x00\x55"; break; # Disco Speed +
     }
  
     $this->SendCommand($tosend);
