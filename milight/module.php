@@ -82,6 +82,8 @@ class milight extends IPSModule
 	
 	private $CommandRepeat = 3;
 
+    private $mDiscoMode = 0;
+    
 	public function Create()
 	{
 		//Never delete this line!
@@ -116,6 +118,11 @@ class milight extends IPSModule
             Array(8, 'strobe white', '', -1),
 		));
 
+		$this->RegisterProfileIntegerEx("milight.Speed", "", "", "", Array(
+			Array(0, '-', '', -1),
+			Array(1, '+', '', -1),
+		));
+
 		$this->RegisterVariableInteger("STATE", "STATE", "milight.State", 1);
 		$this->EnableAction("STATE");
 		$this->RegisterVariableInteger("Color", "Color", "~HexColor", 2);
@@ -124,6 +131,8 @@ class milight extends IPSModule
 		$this->EnableAction("Brightness");
 		$this->RegisterVariableInteger("Disco", "Disco", "milight.Disco", 4);
 		$this->EnableAction("Disco");
+		$this->RegisterVariableInteger("Speed", "Speed", "milight.Speed", 5);
+		$this->EnableAction("Speed");
 		$this->SetVisibility(0);
 		
 		$this->TestGateway();
@@ -217,22 +226,31 @@ class milight extends IPSModule
 	}
 
   public function SetDiscoMode(integer $Mode)
-  {
-    if ($Mode > 8) $Mode = 8;
-    if ($Mode < 0) $Mode = 0;
-    $tosend[] = $this->GroupOn;
-    for($i=0;$i<=$Mode;$i++) $tosend[] = "\x4d\x00\x55";
-    $this->SendCommand($tosend);
+  {  
+    $steps = $Mode - $mDiscoMode;
+    if ($steps == 0) return;
+    if ($steps < 0) $steps += 9;
+    
+    for($i=0;$i<=$Mode;$i++) {
+        $tosend = array();
+        $tosend[] = $this->GroupOn;
+        $tosend[] = "\x4d\x00\x55";
+        $this->SendCommand($tosend);
+    }  
+    
+    $mDiscoMode = $Mode;
   }
 
   public function SetDiscoSpeed($speed)
   {
     $tosend[] = $this->GroupOn;
     switch ($speed) {
-      case '-':
+      case 0:
         $tosend[] = "\x43\x00\x55";
-      case '+':
+        break;
+      case 1:
         $tosend[] = "\x44\x00\x55";
+        break;
     }
     $this->SendCommand($tosend);
   }
@@ -258,6 +276,10 @@ class milight extends IPSModule
 				$this->SetValueInteger('Disco', $Value);
 				$this->SetDiscoMode($Value);
 				break;
+            case 'Speed':
+				$this->SetValueInteger('Disco', $Value);
+				$this->SetDiscoSpeed($Value);
+				break;            
 			default:
 				throw new Exception('Invalid Ident');
 			break;
@@ -273,21 +295,25 @@ class milight extends IPSModule
 			$this->SetHidden('Color', true);
 			$this->SetHidden('Brightness', true);
 			$this->SetHidden('Disco', true);
-			break;
+			$this->SetHidden('Speed', true);
+        	break;
 		case 1: // weiß
 			$this->SetHidden('Color', true);
 			$this->SetHidden('Brightness', false);
 			$this->SetHidden('Disco', true);
-			break;
+			$this->SetHidden('Speed', true);
+  			break;
 		case 2: // Farbe
 			$this->SetHidden('Color', false);
 			$this->SetHidden('Brightness', true);
 			$this->SetHidden('Disco', true);
+            $this->SetHidden('Speed', true);
 			break;
 		case 3: // Disco
 			$this->SetHidden('Color', true);
 			$this->SetHidden('Brightness', true);
 			$this->SetHidden('Disco', false);
+            $this->SetHidden('Speed', false);
 			break;
 		}
 		$this->SetValueInteger('STATE', $State);
