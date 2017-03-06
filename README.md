@@ -1,5 +1,6 @@
 ﻿
-﻿## milight
+MiLight
+﻿
 IPS-Modul zur Steuerung des milight-RGBW-Gateways
 
 ## Inhalt
