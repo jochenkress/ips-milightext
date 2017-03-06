@@ -80,7 +80,7 @@ class milight extends IPSModule
 	private $GroupOff;
 	private $GroupWhite;
 	
-	private $CommandRepeat = 3;
+	private $CommandRepeat = 1;
     
 	public function Create()
 	{
